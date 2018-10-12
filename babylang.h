@@ -23,6 +23,21 @@
 #define BABY_GIVE_OUTPUT "guuu"
 #define BABY_LOOP_BEGIN "gagu"
 #define BABY_LOOP_END "guga"
+#define BABY_RESET "unga"
+
+
+#define OPCODE_MOVE_FRONT 1
+#define OPCODE_MOVE_BACK 2
+#define OPCODE_INCREMENT 3
+#define OPCODE_DECREMENT 4
+#define OPCODE_TAKE_INPUT 5
+#define OPCODE_GIVE_OUTPUT 6
+#define OPCODE_LOOP_BEGIN 7
+#define OPCODE_LOOP_END 8
+#define OPCODE_RESET 9
+
+#define OPCODE_FOUND 0
+#define COMMAND_SIZE 4
 
 #define BABYLANG_H
 #endif
@@ -33,7 +48,17 @@
  * Start interpreting the code
  * @param source The source code to be interpreted
  */
+<<<<<<< HEAD
 void baby_interpret(FILE* source);
+=======
+void baby_parse(FILE* sourceCode);
+
+/**
+ * Insert a command into intermediatary code
+ * @param command The command to be inserted
+ */
+void baby_insert_command(int command);
+>>>>>>> f20855469eb1474d4c4e6c9551149f73753606e8
 
 /**
  * Executes the commands in the program location
@@ -42,21 +67,18 @@ void baby_execute();
 
 /**
  * Reset the value stored at a memory location
- * @param reference The memory location to be reset
  */
-void baby_reset(int reference);
+void baby_reset();
 
 /**
  * Increment the value stored at a memory location
- * @param reference The memory location to be incremented
  */
-void baby_increment_value(int reference);
+void baby_increment_value();
 
 /**
  * Decrement the value stored at memory location
- * @param reference The memory location to be decremented
  */
-void baby_decrement_value(int reference);
+void baby_decrement_value();
 
 /**
  * Point to the next line to be executed
@@ -69,22 +91,20 @@ void baby_move_front();
 void baby_move_back();
 
 /**
- * Decrement the value stored at memory location
- * @param reference The memory location to be decremented
- */
-void baby_decrement(int reference);
-
-/**
  * Read a character from stdin and write to current location
  * @return The character read from stdin.
  */
-char baby_read(void);
+void baby_read(void);
 
 /**
  * write a character to stdout.
  * @param character The character to output
  */
-char baby_write(char character);
+void baby_write(char character);
 
-
+/**
+ * Parse the command
+ * @param command
+ */
+void baby_compare_command(char[4] command, char[4] );
 

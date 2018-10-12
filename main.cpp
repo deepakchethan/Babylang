@@ -30,16 +30,21 @@ int main(int numberOfArguments, char* argumentList[])
             printf( "Usage: %s hello.baby \n\n", argumentList[0] );
             exit(1);
     }
-    FILE* filePointer = openFile(argv[1],"rb");
+
+    FILE* sourceFilePointer = openFile(argv[1]);
+
     return 0;
 }
 
-/**
- * The Function that opens the files and checks if it is valid and returns c stream pointer
- */
-FILE* openFile(string fileName, string openMode){
 
-    FILE* filePointer = fopen( fileName, openMode );
+
+/**
+ * The Function that opens the files and checks if it is valid and returns a file pointer
+ * @param sourceFileName The name of the file containing the source code
+ */
+FILE* openFile(string sourceFileName){
+
+    FILE* filePointer = fopen( sourceFileName, "rb" );
 
     if( filePointer == NULL ){
             printf( "Cannot open the source file [%s].\n", argumentList[1] );
