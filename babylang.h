@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 #ifndef BABYLANG_H
-#define BABYLANG_H
 
 #define BABY_INCREMENT "aaag"
 #define BABY_DECREMENT "uuug"
@@ -25,11 +24,16 @@
 #define BABY_LOOP_BEGIN "gagu"
 #define BABY_LOOP_END "guga"
 
+#define BABYLANG_H
+#endif
+
+#include<cstdio>
+
 /**
  * Start interpreting the code
  * @param source The source code to be interpreted
  */
-void baby_interpret(File* source);
+void baby_interpret(FILE* source);
 
 /**
  * Executes the commands in the program location
