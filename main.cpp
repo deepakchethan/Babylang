@@ -14,40 +14,38 @@
  * limitations under the License.
  */
 
+#define MINIMUM_REQUIRED_PARAMETERS 2
+
 #include <iostream>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
 #include <getopt.h>
 #include <cctype>
-using namespace std;
+#include "babylang.h"
 
+/**
+ * The Function that opens the files and checks if it is valid and returns a file pointer
+ * @param sourceFileName The name of the file containing the source code
+ */
 
 
 int main(int numberOfArguments, char* argumentList[])
 {
     if( numberOfArguments < MINIMUM_REQUIRED_PARAMETERS ){
-            printf( "Usage: %s hello.baby \n\n", argumentList[0] );
+            std::cout << "Usage: babylang hello.baby " << std::endl;
             exit(1);
     }
 
-    FILE* sourceFilePointer = openFile(argv[1]);
+    baby_init();
+
+    baby_parse(argumentList[1]);
+
+    baby_execute();
 
     return 0;
 }
 
 
 
-/**
- * The Function that opens the files and checks if it is valid and returns a file pointer
- * @param sourceFileName The name of the file containing the source code
- */
-FILE* openFile(string sourceFileName){
 
-    FILE* filePointer = fopen( sourceFileName, "rb" );
-
-    if( filePointer == NULL ){
-            printf( "Cannot open the source file [%s].\n", argumentList[1] );
-            exit( 1 );
-    }
-}

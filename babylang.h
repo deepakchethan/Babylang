@@ -42,23 +42,18 @@
 #define BABYLANG_H
 #endif
 
-#include<cstdio>
-
+#include <cstdio>
 /**
  * Start interpreting the code
  * @param source The source code to be interpreted
  */
-<<<<<<< HEAD
-void baby_interpret(FILE* source);
-=======
-void baby_parse(FILE* sourceCode);
+void baby_parse(const char* sourceFileName);
 
 /**
  * Insert a command into intermediatary code
  * @param command The command to be inserted
  */
 void baby_insert_command(int command);
->>>>>>> f20855469eb1474d4c4e6c9551149f73753606e8
 
 /**
  * Executes the commands in the program location
@@ -103,8 +98,13 @@ void baby_read(void);
 void baby_write(char character);
 
 /**
- * Parse the command
- * @param command
+ *  Mnemonic initialization table
  */
-void baby_compare_command(char[4] command, char[4] );
+void baby_init();
+
+/**
+  * Executes the source
+  */
+void baby_execute();
+
 

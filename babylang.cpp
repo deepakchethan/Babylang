@@ -1,106 +1,147 @@
 #include "babylang.h"
-#include <vector>
+#include <deque>
+#include <fstream>
+#include <cstring>
+#include <unordered_map>
+#include <iostream>
 
 /*
  * The Source generated after the initial interpretion
  */
-vector<int> intermediatary_source;
+static std::deque<int> intermediatary_source;
+static std::deque<int>::iterator source_pointer;
 
 /*
  * The memory tape for the program
  */
-vector<int> program_memory;
+static std::deque<int> program_memory(1,0);
+static std::deque<int>::iterator memory_pointer;
 
 /*
- * An iterator that shows the currently executing instruction
+ * A multi_map that maps the mnemonics with opcodes
  */
-vector<int>::iterator instruction_counter;
+static std::unordered_map<std::string,int> mnemonic_mapper;
+
+void baby_init(){
+    mnemonic_mapper[BABY_INCREMENT] = OPCODE_INCREMENT;
+    mnemonic_mapper[BABY_DECREMENT] = OPCODE_DECREMENT;
+    mnemonic_mapper[BABY_MOVE_BACK] = OPCODE_MOVE_BACK;
+    mnemonic_mapper[BABY_MOVE_FRONT] = OPCODE_MOVE_FRONT;
+    mnemonic_mapper[BABY_TAKE_INPUT] = OPCODE_TAKE_INPUT;
+    mnemonic_mapper[BABY_GIVE_OUTPUT] = OPCODE_GIVE_OUTPUT;
+    mnemonic_mapper[BABY_LOOP_BEGIN] = OPCODE_LOOP_BEGIN;
+    mnemonic_mapper[BABY_LOOP_END] = OPCODE_LOOP_END;
+    mnemonic_mapper[BABY_RESET] = OPCODE_RESET;
+
+    source_pointer = intermediatary_source.begin();
+    memory_pointer = program_memory.begin();
+}
 
 void baby_reset(){
-    *program_counter = 0;
+    *memory_pointer = 0;
 }
 
 void baby_increment_value(){
-    *program_counter += 1;
+
+    *memory_pointer += 1;
 }
 
 void baby_decrement_value(){
-    *program_counter -=1;
+
+    *memory_pointer -=1;
 }
 
 void baby_move_back(){
-    program_counter--;
+
+    if (memory_pointer == program_memory.begin()){
+
+        memory_pointer = program_memory.end();
+    }
+
+    memory_pointer--;
 }
 
 void baby_move_front(){
-    program_counter++;
 
+    if (memory_pointer+1 == program_memory.end()){
+
+        program_memory.push_back(0);
+
+    }
+    memory_pointer++;
 }
 
 void baby_read(){
+
     char userInput;
-    scanf("%s",&userInput);
-    *program_counter = userInput;
+    std::cin >> userInput;
+    *memory_pointer = userInput;
 }
 
 void baby_write(){
+
     char output;
-    output = *program_counter;
-    printf("%s",output);
+    output = char (*memory_pointer);
+    std::cout << output;
 }
 
 void baby_insert_command(int command){
+
     intermediatary_source.push_back(command);
+
 }
 
-void
+void baby_parse(const char* source){
 
-// TODO: complete working on this
-void baby_parse(File* source){
+    std::fstream sourceStream;
+    std::string keyword;
+    sourceStream.open(source);
 
-    char command[COMMAND_SIZE];
-
-    while( !feof(source) )
+    while( sourceStream >> keyword )
     {
 
-        command[COMMAND_SIZE-1] = fgetc( f );
+        std::cout << keyword << std::endl;
 
-        if( OPCODE_FOUND = !strncmp(BABY_MOVE_FRONT , command, COMMAND_SIZE ) )
-            baby_insert_command(OPCODE_MOVE_FRONT);
-        else if( OPCODE_FOUND = !strncmp( BABY_MOVE_BACK, command, COMMAND_SIZE ) )
-            baby_insert_command(OPCODE_MOVE_BACK);
-        else if( OPCODE_FOUND = !strncmp( "mOO", command, COMMAND_SIZE ) )
-            program.push_back( 3 );
-        else if( OPCODE_FOUND = !strncmp( "Moo", command, COMMAND_SIZE ) )
-            program.push_back( 4 );
-        else if( OPCODE_FOUND = !strncmp( "MOo", command, COMMAND_SIZE ) )
-            program.push_back( 5 );
-        else if( OPCODE_FOUND = !strncmp( "MoO", command, COMMAND_SIZE ) )
-            program.push_back( 6 );
-        else if( OPCODE_FOUND = !strncmp( "MOO", command, COMMAND_SIZE ) )
-            program.push_back( 7 );
-        else if( OPCODE_FOUND = !strncmp( "OOO", command, COMMAND_SIZE ) )
-            program.push_back( 8 );
-        else if( OPCODE_FOUND = !strncmp( "MMM", command, COMMAND_SIZE ) )
-            program.push_back( 9 );
-        else if( OPCODE_FOUND = !strncmp( "OOM", command, COMMAND_SIZE ) )
-            program.push_back( 10 );
-        else if( OPCODE_FOUND = !strncmp( "oom", command, COMMAND_SIZE ) )
-            program.push_back( 11 );
+        if (mnemonic_mapper.find(keyword) != mnemonic_mapper.end()){
+            baby_insert_command(mnemonic_mapper[keyword]);
+        }
+        else{
+          //  throw "Illegal Command";
+        }
 
-        if( OPCODE_FOUND )
-        {
-            memset( command, 0, COMMAND_SIZE );
-        }
-        else
-        {
-            command[0] = command[1];
-            command[1] = command[2];
-            command[2] = 0;
-        }
     }
 
-fclose( f );
+}
+
+void baby_execute(){
+
+    for (auto curr_pointer:intermediatary_source){
+
+        switch (curr_pointer) {
+
+            case OPCODE_INCREMENT: baby_increment_value();
+                break;
+
+            case OPCODE_DECREMENT: baby_decrement_value();
+                break;
+
+            case OPCODE_MOVE_FRONT: baby_move_front();
+                break;
+
+            case OPCODE_MOVE_BACK: baby_move_back();
+                break;
+
+            case OPCODE_TAKE_INPUT: baby_read();
+                break;
+
+            case OPCODE_GIVE_OUTPUT: baby_write();
+                break;
+
+            case OPCODE_RESET: baby_reset();
+                break;
+
+        }
+    }
 }
 
 
