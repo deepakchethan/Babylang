@@ -106,7 +106,7 @@ void baby_parse(const char* source){
             baby_insert_command(mnemonic_mapper[keyword]);
         }
         else{
-          //  throw "Illegal Command";
+            throw "Illegal Command";
         }
 
     }
