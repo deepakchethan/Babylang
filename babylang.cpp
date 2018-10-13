@@ -73,9 +73,9 @@ void baby_move_front(){
 
 void baby_read(){
 
-    char userInput;
+    int userInput;
     std::cin >> userInput;
-    *memory_pointer = userInput;
+    *memory_pointer = char(userInput);
 }
 
 void baby_write(){
@@ -100,7 +100,6 @@ void baby_parse(const char* source){
     while( sourceStream >> keyword )
     {
 
-        std::cout << keyword << std::endl;
 
         if (mnemonic_mapper.find(keyword) != mnemonic_mapper.end()){
             baby_insert_command(mnemonic_mapper[keyword]);
@@ -113,11 +112,17 @@ void baby_parse(const char* source){
 
 }
 
+void baby_handle_loop(){
+    while (*memory_pointer){
+
+    }
+}
+
 void baby_execute(){
 
-    for (auto curr_pointer:intermediatary_source){
+    for (source_pointer = intermediatary_source.begin(); source_pointer != intermediatary_source.end(); ++source_pointer){
 
-        switch (curr_pointer) {
+        switch (*source_pointer) {
 
             case OPCODE_INCREMENT: baby_increment_value();
                 break;
@@ -138,6 +143,9 @@ void baby_execute(){
                 break;
 
             case OPCODE_RESET: baby_reset();
+                break;
+
+            case OPCODE_LOOP_BEGIN: baby_handle_loop();
                 break;
 
         }
