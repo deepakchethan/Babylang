@@ -108,3 +108,5 @@ void baby_init();
 void baby_execute();
 
 
+void baby_execute_command(int command);
+
