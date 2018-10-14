@@ -92,7 +92,7 @@ void baby_read(){
 
     int userInput;
     std::cin >> userInput;
-    *memory_pointer = char(userInput);
+    *memory_pointer = userInput;
 }
 
 void baby_write(){

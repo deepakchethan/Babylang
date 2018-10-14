@@ -39,9 +39,9 @@ int main(int numberOfArguments, char* argumentList[])
 
         baby_parse(argumentList[1]);
 
-    } catch (char* error) {
+    } catch (char const *error) {
 
-        std::cout << error << std::endl;
+        std::cout << "error: " << error << std::endl;
     }
 
 
@@ -49,9 +49,9 @@ int main(int numberOfArguments, char* argumentList[])
 
         baby_execute();
 
-    }catch  (   char* error ){
+    }catch  (char const *error){
 
-        std::cout << error << std::endl;
+        std::cout << "error: " << error << std::endl;
     }
 
     return 0;
