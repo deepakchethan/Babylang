@@ -5,20 +5,8 @@ CONFIG -= qt
 
 SOURCES += \
         main.cpp \
-    babylang.cpp \
-    babylang.cpp \
-    main.cpp \
-    babylang.cpp \
-    main.cpp \
-    Tests/basic.cpp \
-    babylang.cpp \
-    main.cpp
+    babylang.cpp 
 
 HEADERS += \
-    babylang.h \
-    babylang.h \
-    babylang.h \
-    babylang.h
+    babylang.h 
 
-DISTFILES += \
-    Examples/hello.baby
