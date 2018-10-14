@@ -17,7 +17,7 @@
 #define MINIMUM_REQUIRED_PARAMETERS 2
 
 #include <iostream>
-
+#include <cstdlib>
 #include "babylang.h"
 
 /**
