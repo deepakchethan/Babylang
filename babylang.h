@@ -25,7 +25,6 @@
 #define BABY_LOOP_END "guga"
 #define BABY_RESET "unga"
 
-
 #define OPCODE_MOVE_FRONT 1
 #define OPCODE_MOVE_BACK 2
 #define OPCODE_INCREMENT 3
@@ -35,9 +34,6 @@
 #define OPCODE_LOOP_BEGIN 7
 #define OPCODE_LOOP_END 8
 #define OPCODE_RESET 9
-
-#define OPCODE_FOUND 0
-#define COMMAND_SIZE 4
 
 #define BABYLANG_H
 #endif
@@ -56,57 +52,53 @@ void baby_parse(const char* sourceFileName);
 void baby_insert_command(int command);
 
 /**
- * Executes the commands in the program location
+ * Executes the commands listed in the intermediatary source
  */
 void baby_execute();
 
 /**
- * Reset the value stored at a memory location
+ * Reset the value stored at current memory location
  */
 void baby_reset();
 
 /**
- * Increment the value stored at a memory location
+ * Increment the value stored at the current memory location
  */
 void baby_increment_value();
 
 /**
- * Decrement the value stored at memory location
+ * Decrement the value stored at current memory location
  */
 void baby_decrement_value();
 
 /**
- * Point to the next line to be executed
+ * Move the memory_pointer to the next memory location
  */
 void baby_move_front();
 
 /**
- * Point to the next line to be executed
+ * Point to the next line to the previous memory location
  */
 void baby_move_back();
 
 /**
  * Read a character from stdin and write to current location
- * @return The character read from stdin.
  */
-void baby_read(void);
+void baby_read();
 
 /**
- * write a character to stdout.
- * @param character The character to output
+ * Get the character from current location and write to stdout
  */
-void baby_write(char character);
+void baby_write();
 
 /**
- *  Mnemonic initialization table
+ *  Initializes the pointers, mnemonic table
  */
 void baby_init();
 
-/**
-  * Executes the source
-  */
-void baby_execute();
-
-
+/*
+ * Executes the given command
+ * @param The command to be executed
+ */
 void baby_execute_command(int command);
 

@@ -1,18 +1,36 @@
+/*
+ * Copyright 2018 Deepak Chethan
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 #include "babylang.h"
 #include <deque>
 #include <fstream>
-#include <cstring>
 #include <unordered_map>
 #include <iostream>
 
+
 /*
  * The Source generated after the initial interpretion
+ * The pointer that points to currently executed command in the intermediatary_source
  */
 static std::deque<int> intermediatary_source;
 static std::deque<int>::iterator source_pointer;
 
 /*
- * The memory tape for the program
+ * The memory storage for the program,
+ * The pointer that points to currently used program_memory
  */
 static std::deque<int> program_memory(1,0);
 static std::deque<int>::iterator memory_pointer;
@@ -33,7 +51,6 @@ void baby_init(){
     mnemonic_mapper[BABY_LOOP_END] = OPCODE_LOOP_END;
     mnemonic_mapper[BABY_RESET] = OPCODE_RESET;
 
-    source_pointer = intermediatary_source.begin();
     memory_pointer = program_memory.begin();
 }
 
@@ -101,9 +118,10 @@ void baby_parse(const char* source){
     while( sourceStream >> keyword )
     {
 
-
         if (mnemonic_mapper.find(keyword) != mnemonic_mapper.end()){
+
             baby_insert_command(mnemonic_mapper[keyword]);
+
         }
         else{
             throw "Illegal Command";
@@ -118,6 +136,7 @@ void baby_handle_loop(){
     source_pointer++;
 
     std::deque<int>::iterator loop_beginning_pointer = source_pointer;
+
 
     while (*memory_pointer){
 
@@ -166,9 +185,27 @@ void baby_execute_command(int command){
 }
 void baby_execute(){
 
+    int testCounter = 0;
+    for (source_pointer = intermediatary_source.begin(); source_pointer!= intermediatary_source.end(); ++source_pointer){
+
+        if (*source_pointer == OPCODE_LOOP_BEGIN){
+
+               ++testCounter;
+
+        }else if (*source_pointer == OPCODE_LOOP_END){
+
+                --testCounter;
+        }
+    }
+
+    if (testCounter != 0){
+
+        throw "gagu needs to be terminated with guga";
+    }
+
     for (source_pointer = intermediatary_source.begin(); source_pointer != intermediatary_source.end(); ++source_pointer){
 
-        baby_execute_command(*source_pointer);
+            baby_execute_command(*source_pointer);
 
     }
 }

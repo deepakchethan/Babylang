@@ -17,11 +17,7 @@
 #define MINIMUM_REQUIRED_PARAMETERS 2
 
 #include <iostream>
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
-#include <getopt.h>
-#include <cctype>
+
 #include "babylang.h"
 
 /**
@@ -39,9 +35,24 @@ int main(int numberOfArguments, char* argumentList[])
 
     baby_init();
 
-    baby_parse(argumentList[1]);
+    try {
 
-    baby_execute();
+        baby_parse(argumentList[1]);
+
+    } catch (char* error) {
+
+        std::cout << error << std::endl;
+    }
+
+
+    try{
+
+        baby_execute();
+
+    }catch  (   char* error ){
+
+        std::cout << error << std::endl;
+    }
 
     return 0;
 }
