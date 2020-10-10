@@ -1,4 +1,4 @@
-# Babylang     ![travis_build_status](https://travis-ci.org/dodococo/Babylang.svg?branch=master)
+# Babylang
   
 Putting my own spin on some of my favorite estoeric languages brainf*ck and COW, I came up with the grand BabyLang with 9 amazing instructions. The interpreter is written in C++ (Cause, Why not?). It is basic, cause the best things in life are basic. It is esoteric for a reason. 
   
